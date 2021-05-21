@@ -2,6 +2,7 @@ package dan.tp2021.cuentacorriente.domain;
 
 import java.time.Instant;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Pago {
 	@JoinColumn(name="ID_CLIENTE")
 	private Cliente cliente;
 		
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="ID_MEDIO_PAGO")
 	private MedioPago medio;
 	

@@ -1,6 +1,11 @@
 package dan.tp2021.cuentacorriente.rest;
 
+
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,11 +32,12 @@ public class PagoRest {
 	@ApiOperation(value = "Crea un pago")
 	public ResponseEntity<Pago> crear(@RequestBody Pago pago) {
 
-		;
+		
 
-		if (pago.getMedio() != null && pago.getCliente() != null) {
+		if (/*pago.getMedio() != null && */pago.getCliente() != null) {
+			pago.setFechaPago(Instant.now());
 
-			if (pagoService.guardarPedido(pago) != null) {
+			if (pagoService.guardarPago(pago) != null) {
 				return ResponseEntity.ok(pago);
 			}
 
@@ -79,9 +85,22 @@ public class PagoRest {
 
 	}
 
-	// TODO: b. Retorna el estado de cuenta corriente de un cliente con un detalle
+		
+	@GetMapping(path = "cliente/{idCliente}")
+	@ApiOperation(value = "Obtiene los pagos de un cliente dado un id")
+	public ResponseEntity<List<Pago>> obtenerPagosConIdCliente(@PathVariable Integer idCliente) {
+		List<Pago> listaPagos = pagoService.buscarPagoPorIdCliente(idCliente);
+		if (!listaPagos.isEmpty()) {
+			return ResponseEntity.ok(listaPagos);
+		}
+		return ResponseEntity.notFound().build();
+
+	}
+	
+	
+	
+		// TODO: b. Retorna el estado de cuenta corriente de un cliente con un detalle
 	// de:
-	// i. Pagos
 	// ii. Facturas (pedidos enviados)
 
 }
