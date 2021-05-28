@@ -1,13 +1,26 @@
 package dan.tp2021.cuentacorriente.domain;
 
-import java.util.List;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Cliente {
 	
+	@Id
+	@Column(name="ID_CLIENTE")
     private Integer id;
+	
     private String razonSocial;
     private String cuit;
     private String mail;
+    
+    
+    
+    
+    
 	public Integer getId() {
 		return id;
 	}

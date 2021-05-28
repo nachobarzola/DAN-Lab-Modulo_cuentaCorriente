@@ -2,6 +2,11 @@ package dan.tp2021.cuentacorriente.domain;
 
 import java.time.Instant;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+@Entity
+@PrimaryKeyJoinColumn(name = "ID_CHEQUE_MEDIO_PAGO")
 public class Cheque extends MedioPago {
 
 	private Integer nroCheque;

@@ -1,0 +1,2 @@
+INSERT INTO CLIENTE (ID_CLIENTE,CUIT,MAIL,RAZON_SOCIAL) VALUES (1,'20389818705','fperino@frsf.utn.edu.ar','elCoreanito s.r.l');
+INSERT INTO CLIENTE (ID_CLIENTE,CUIT,MAIL,RAZON_SOCIAL) VALUES (2,'20394569527','csantos@frsf.utn.edu.ar','procesadoresAnonimos s.a');
