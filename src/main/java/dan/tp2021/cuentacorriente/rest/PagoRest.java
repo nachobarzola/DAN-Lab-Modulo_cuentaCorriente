@@ -1,10 +1,8 @@
 package dan.tp2021.cuentacorriente.rest;
 
-
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dan.tp2021.cuentacorriente.domain.Pago;
 import dan.tp2021.cuentacorriente.service.interfaces.PagoService;
+import dan.tp2021.cuentacorriente.service.interfaces.PedidoRestExternoService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -28,13 +27,15 @@ public class PagoRest {
 	@Autowired
 	PagoService pagoService;
 
+	@Autowired
+	PedidoRestExternoService pedidoExtService;
+
 	@PostMapping
 	@ApiOperation(value = "Crea un pago")
 	public ResponseEntity<Pago> crear(@RequestBody Pago pago) {
 
-		
-
-		if (/*pago.getMedio() != null && */pago.getCliente() != null) {
+//TODO: si no anda pago.getMedio() != null estaba comentado
+		if (pago.getMedio() != null && pago.getCliente() != null) {
 			pago.setFechaPago(Instant.now());
 
 			if (pagoService.guardarPago(pago) != null) {
@@ -85,8 +86,7 @@ public class PagoRest {
 
 	}
 
-		
-	@GetMapping(path = "cliente/{idCliente}")
+	@GetMapping(path = "cliente/pagos/{idCliente}")
 	@ApiOperation(value = "Obtiene los pagos de un cliente dado un id")
 	public ResponseEntity<List<Pago>> obtenerPagosConIdCliente(@PathVariable Integer idCliente) {
 		List<Pago> listaPagos = pagoService.buscarPagoPorIdCliente(idCliente);
@@ -96,11 +96,17 @@ public class PagoRest {
 		return ResponseEntity.notFound().build();
 
 	}
-	
-	
-	
-		// TODO: b. Retorna el estado de cuenta corriente de un cliente con un detalle
-	// de:
-	// ii. Facturas (pedidos enviados)
+
+	// TODO: Falta testearlo
+	@GetMapping(path = "cliente/facturas/{idCliente}")
+	@ApiOperation(value = "Obtiene las facturas de un cliente dado un id")
+	public ResponseEntity<List<?>> obtenerFacturasConIdCliente(@PathVariable Integer idCliente) {
+		List<?> lista = pedidoExtService.obtenerFacturas(idCliente);
+		if (lista != null) {
+			return ResponseEntity.ok(lista);
+		} else {
+			return ResponseEntity.badRequest().build();
+		}
+	}
 
 }
