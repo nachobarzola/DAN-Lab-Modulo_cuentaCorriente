@@ -4,12 +4,18 @@ package dan.tp2021.cuentacorriente.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Entity
+@Transactional(readOnly = true)
 public class Cliente {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // valor autonumerico
 	@Column(name="ID_CLIENTE")
     private Integer id;
 	
