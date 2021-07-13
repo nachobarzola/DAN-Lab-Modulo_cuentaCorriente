@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import dan.tp2021.cuentacorriente.domain.Cliente;
 import dan.tp2021.cuentacorriente.domain.Efectivo;
 import dan.tp2021.cuentacorriente.domain.Pago;
+import dan.tp2021.cuentacorriente.service.dao.ClienteRepository;
 import dan.tp2021.cuentacorriente.service.interfaces.PagoService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -35,6 +36,9 @@ public class PagoRestTest {
 
 	@Autowired
 	private PagoService pagoService;
+	
+	@Autowired
+	private ClienteRepository clienteRepo;
 
 	@LocalServerPort
 	String puerto;
@@ -56,9 +60,9 @@ public class PagoRestTest {
 		efe.setObservacion("Medio de pago efectivo");
 
 		Cliente c1 = new Cliente();
+		c1.setRazonSocial("ClienteRaton01");
+		clienteRepo.saveAndFlush(c1);
 
-		c1.setId(1);
-		pago.setId(1);
 		pago.setCliente(c1);
 		pago.setFechaPago(Instant.now());
 		pago.setMedio(efe);
@@ -68,12 +72,14 @@ public class PagoRestTest {
 
 		assertTrue(respuesta.getStatusCode().equals(HttpStatus.OK));
 
+		pago = respuesta.getBody();
 		// Chequeo que no este persistido
 		Optional<Pago> pag = pagoService.buscarPorId(pago.getId());
 
 		assertNotEquals(Optional.empty(), pag);
 
 		pagoService.borrarPago(pago);
+		clienteRepo.delete(c1);
 
 	}
 }
