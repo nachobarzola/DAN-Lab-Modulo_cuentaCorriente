@@ -1,0 +1,1 @@
+INSERT INTO CLIENTE VALUES (1,'20395453456','elsaLamin@gmail.com','Cliente099');
