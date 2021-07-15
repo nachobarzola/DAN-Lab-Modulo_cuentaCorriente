@@ -16,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
 
 import dan.tp2021.cuentacorriente.domain.Cliente;
@@ -25,7 +26,7 @@ import dan.tp2021.cuentacorriente.service.dao.ClienteRepository;
 import dan.tp2021.cuentacorriente.service.interfaces.PagoService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-
+@ActiveProfiles("testing")
 public class PagoRestTest {
 
 	private String ENDPOINT_PAGO = "/api/pago";
