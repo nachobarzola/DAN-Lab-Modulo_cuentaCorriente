@@ -1,7 +1,5 @@
 package dan.tp2021.cuentacorriente;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -18,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import dan.tp2021.cuentacorriente.domain.Cliente;
 import dan.tp2021.cuentacorriente.domain.Efectivo;
