@@ -15,22 +15,24 @@ public class PedidoRestExternoServiceImp implements PedidoRestExternoService {
 	@SuppressWarnings("rawtypes")
 	@Autowired
 	CircuitBreakerFactory circuitBreakerFactory;
+	
+	@Autowired
+	RestTemplate restPedido;
 
-	private static String API_REST_PEDIDO = "http://localhost:9002/";
+	private static String API_REST_PEDIDO = "http://modulo-pedidos/";
 	private static String ENDPOINT_PEDIDO = "api/pedido";
 
 	@Override
 	public List<?> obtenerFacturas(Integer idCliente) {
 		CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
 
-		RestTemplate restProducto = new RestTemplate();
 		String uri = API_REST_PEDIDO + ENDPOINT_PEDIDO + "?idCliente=" + idCliente;
 		//
 		List<?> respuesta;
 
 		//
 		respuesta = circuitBreaker.run(() -> 
-		restProducto.getForObject(uri,List.class),
+		restPedido.getForObject(uri,List.class),
 		throwable -> defaultResponse());
 
 			return respuesta;
